@@ -26,6 +26,18 @@ async function loadDealers() {
 
   setLoading(false);
 }
+  async function handleUpdateStatus(id: string, newStatus: string) {
+  const { error } = await supabase
+   .from("dealers")
+   .update({ status: newStatus })
+   .eq("id", id);
+
+  if (error) {
+    alert("Error: " + error.message);
+  } else {
+    loadDealers();
+  }
+}
   return (
     <main className="min-h-screen bg-gray-100 p-8">
 
@@ -49,19 +61,20 @@ async function loadDealers() {
     <th className="p-4 text-left">City</th>
     <th className="p-4 text-left">Status</th>
     <th className="p-4 text-left">Registered On</th>
+    <th className="p-4 text-left">Action</th> {/* YE NAYI LINE */}
   </tr>
 </thead>
           <tbody>
 
   {loading ? (
     <tr>
-      <td colSpan={6} className="text-center p-6">
+      <td colSpan={7} className="text-center p-6">
         Loading...
       </td>
     </tr>
   ) : dealers.length === 0 ? (
     <tr>
-      <td colSpan={6} className="text-center p-6">
+      <td colSpan={7} className="text-center p-6">
         No Dealers Found
       </td>
     </tr>
@@ -77,12 +90,40 @@ async function loadDealers() {
 
         <td className="p-4">{dealer.city}</td>
 
-        <td className="p-4">{dealer.status}</td>
+       <td className="p-4">
+  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+    dealer.status === 'Approved' ? 'bg-green-100 text-green-700' : 
+    dealer.status === 'Rejected' ? 'bg-red-100 text-red-700' : 
+    'bg-yellow-100 text-yellow-700'
+  }`}>
+    {dealer.status}
+  </span>
+</td>
 
         <td className="p-4">
           {dealer.created_at?.split("T")[0]}
         </td>
-
+        
+<td className="p-4">
+  {dealer.status === 'Pending'? (
+    <div className="flex gap-2">
+      <button
+        onClick={() => handleUpdateStatus(dealer.id, 'Approved')}
+        className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm"
+      >
+        Approve
+      </button>
+      <button
+        onClick={() => handleUpdateStatus(dealer.id, 'Rejected')}
+        className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+      >
+        Reject
+      </button>
+    </div>
+  ) : (
+    <span className="text-gray-400 text-sm">-</span>
+  )}
+</td>
       </tr>
     ))
   )}
