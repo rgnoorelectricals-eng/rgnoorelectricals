@@ -60,7 +60,7 @@ async function loadProducts() {
   setProducts(data || []);
 }
 
-async function updateStatus(id: number, status: string) {
+async function handleUpdateStatus(id: number, status: string) {
   const { error } = await supabase
     .from("dealers")
     .update({ status })
