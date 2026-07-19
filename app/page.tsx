@@ -510,10 +510,10 @@ useEffect(() => {
               </h3>
 
               <div className="flex flex-wrap gap-6 text-gray-300">
-                <a href="#" className="hover:text-white transition">Home</a>
-                <a href="#" className="hover:text-white transition">Products</a>
-                <a href="#" className="hover:text-white transition">About Us</a>
-                <a href="#" className="hover:text-white transition">Contact</a>
+                <Link href="/" className="hover:text-white transition">Home</Link>
+<Link href="/products" className="hover:text-white transition">Products</Link>
+<Link href="/about" className="hover:text-white transition">About Us</Link>
+<Link href="/contact" className="hover:text-white transition">Contact</Link>
                <Link href="/verify" className="hover:text-white transition">
   Warranty
 </Link>
