@@ -196,19 +196,25 @@ async function loadCounts() {
                 <td className="p-4">{dealer.city}</td>
                 <td className="p-4">{dealer.status}</td>
 <td className="p-4">
-  <button
-    onClick={() => updateStatus(dealer.id, "Approved")}
-    className="bg-green-600 text-white px-3 py-1 rounded mr-2"
-  >
-    Approve
-  </button>
+  {dealer.status === 'Pending'? (
+    <>
+      <button
+        onClick={() => handleUpdateStatus(dealer.id, "Approved")}
+        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded mr-2"
+      >
+        Approve
+      </button>
 
-  <button
-    onClick={() => updateStatus(dealer.id, "Rejected")}
-    className="bg-red-600 text-white px-3 py-1 rounded"
-  >
-    Reject
-  </button>
+      <button
+        onClick={() => handleUpdateStatus(dealer.id, "Rejected")}
+        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+      >
+        Reject
+      </button>
+    </>
+  ) : (
+    <span className="text-gray-400 text-sm">-</span>
+  )}
 </td>
               </tr>
             ))}
